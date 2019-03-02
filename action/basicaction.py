@@ -11,13 +11,13 @@ class BasicAction():
         #设备名称
         self.desired_cups['deviceName'] = 'pateo'
 
-        # self.desired_cups['appPackage'] = 'com.qinggan.app.setting'
-        # self.desired_cups['appActivity'] = 'com.qinggan.app.setting.activity.MainActivity'
+        self.desired_cups['appPackage'] = 'com.qinggan.app.setting'
+        self.desired_cups['appActivity'] = 'com.qinggan.app.setting.activity.MainActivity'
         PATH = lambda p:os.path.abspath(os.path.join(os.path.dirname(__file__),p))
         script_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
         # self.desired_cups['app'] = PATH('D:\\pyworkspace\\pateo_test\\apk\\app-debug.apk')
         print(os.path.join(script_path, '..', 'apk', 'app-debug.apk'))
-        self.desired_cups['app'] = os.path.join(script_path, '..', 'apk', 'app-debug.apk')
+        # self.desired_cups['app'] = os.path.join(script_path, '..', 'apk', 'app-debug.apk')
         self.desired_cups['udid'] = udid
         self.desired_cups['autoLaunch'] = False
         self.serive_port = appium_port
@@ -40,8 +40,38 @@ class BasicAction():
         find_id = self.driver.find_element_by_id(id)
         find_id.click()
 
+    def click_by_point(self, x, y, duration=10):
+        self.driver.tap([(x,y)], duration)
+
+    def find_by_id(self, id):
+        try:
+            return self.driver.find_element_by_id(id)
+        except:
+            return False
+    def get_child(self, id):
+        pass
+    
+    def find_by_uiautomator(self, string):
+        """new UiSelector().resourceId("com.qinggan.app.radio:id/freq_tv").childSelector(new UiSelector().className("android.widget.TextView").index(0))"""
+        self.driver.find_element_by_android_uiautomator(string)
+
+
+    def get_text_by_id(self, id):
+        try:
+            find_id = self.driver.find_element_by_id(id)
+            text = find_id.text
+            return text
+        except:
+            return False
+
     def swipe(self, start_x, start_y, end_x, end_y):
         self.driver.swipe(start_x, start_y, end_x, end_y)
+
+    def home(self):
+        self.driver.press_keycode(3)
+
+    def back(self):
+        self.driver.back()
 
 
 

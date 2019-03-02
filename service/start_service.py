@@ -20,7 +20,8 @@ class StartService(threading.Thread):
             if line == b'' and run_server.poll() != None:
                 break
             else:
-                print(line)
+                pass
+                # print(line)
 
     def run(self):
         self.start_appium_server()
