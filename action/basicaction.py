@@ -86,6 +86,12 @@ class BasicAction():
     def back(self):
         self.driver.back()
 
+    def get_page_source(self):
+        activity_page_source = self.driver.page_source()
+        if activity_page_source:
+            return activity_page_source
+        return None
+
     def check_key_in_logcat(self, key):
         adb_shell_pipe = subprocess.Popen('adb -s {id} logcat | grep {key}'.format(key=key, id=self.udid), stdout=subprocess.PIPE, shell=True)
 
@@ -103,7 +109,6 @@ class BasicAction():
         subprocess.Popen('top -d 20 -n 10000 -b >> /data/logs/top.log 2>&1 &', stdin=adb_shell_pipe.stdout,
                          stdout=subprocess.PIPE)
         time.sleep(1)
-
 
     def stop_catch_logcat(self):
         self.stop_process_on_device('logcat')
